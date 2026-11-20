@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1020">
+  <title>مختبر الترتيب — تعلّم الخوارزميات باللعب</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="مختبر الترتيب">
+        <span class="brand-mark">↕</span><span><b>مختبر الترتيب</b><small>ALGORITHM PLAYGROUND</small></span>
+      </a>
+      <div class="top-meta"><span class="live-dot"></span> مساحة تعلّم تفاعلية <span class="top-divider"></span><span class="score-label">النقاط <b id="total-score">000</b></span></div>
+      <button class="icon-button" id="sound-toggle" title="الصوت" aria-label="تبديل الصوت">♪</button>
+    </header>
+
+    <main>
+      <section class="intro-row">
+        <div><p class="eyebrow">افهمها. جرّبها. أتقنها.</p><h1>كل حركة لها <span>منطق.</span></h1><p class="intro-copy">اكتشف كيف ترتّب الخوارزميات البيانات، خطوة بخطوة.</p></div>
+        <div class="hero-badge"><span class="badge-icon">✳</span><span><b>5 خوارزميات</b><small>من الأساسيات إلى التقسيم</small></span></div>
+      </section>
+
+      <nav class="mode-tabs" aria-label="أوضاع اللعب">
+        <button class="mode-tab active" data-mode="sandbox"><span>⌘</span> المختبر الحر</button>
+        <button class="mode-tab" data-mode="challenge"><span>◎</span> تحدّي الخطوات</button>
+        <button class="mode-tab" data-mode="levels"><span>♜</span> المراحل <i class="new-pill">3</i></button>
+      </nav>
+
+      <section class="workspace">
+        <aside class="config-panel panel">
+          <div class="panel-heading"><div><span class="section-kicker">إعداد التجربة</span><h2>خصص مختبرك</h2></div><span class="panel-icon">⚙</span></div>
+          <label class="field-label" for="algorithm">الخوارزمية</label>
+          <div class="select-wrap"><select id="algorithm">
+            <option value="bubble">Bubble Sort <span>· الترتيب الفقاعي</span></option>
+            <option value="selection">Selection Sort · الترتيب بالاختيار</option>
+            <option value="insertion">Insertion Sort · الترتيب بالإدراج</option>
+            <option value="merge">Merge Sort · الترتيب بالدمج</option>
+            <option value="quick">QuickSort · التقسيم (Lomuto)</option>
+          </select><span>⌄</span></div>
+
+          <label class="field-label">اتجاه الترتيب</label>
+          <div class="segmented" id="order-control"><button class="selected" data-order="asc">تصاعدي <span>↑</span></button><button data-order="desc">تنازلي <span>↓</span></button></div>
+
+          <label class="field-label" for="array-input">مصفوفتك <span class="label-hint">أرقام بين −99 و 999</span></label>
+          <div class="input-with-icon"><span>#</span><input id="array-input" value="8, 3, 6, 1, 5" aria-label="أرقام المصفوفة مفصولة بفواصل"></div>
+          <div class="random-row"><div class="stepper"><button id="size-minus" aria-label="تقليل الحجم">−</button><b id="array-size">5</b><button id="size-plus" aria-label="زيادة الحجم">+</button><span>عدد العناصر</span></div><button class="subtle-button" id="randomize">⟳ توليد عشوائي</button></div>
+          <div class="error-text" id="input-error" role="alert"></div>
+
+          <div class="divider"></div>
+          <div class="view-heading"><span class="field-label">طريقة العرض</span><div class="view-switch"><button class="selected" data-view="bars" title="أعمدة">▥</button><button data-view="cards" title="بطاقات">▦</button></div></div>
+          <div class="view-note">بدّل بين تمثيل القيم كأعمدة أو بطاقات.</div>
+          <button class="primary-button" id="start-button"><span>ابدأ الترتيب</span><span>←</span></button>
+          <button class="text-button" id="reset-button">↺ إعادة ضبط التجربة</button>
+          <div class="level-progress hidden" id="level-progress"><div class="progress-top"><b>تقدم المراحل</b><span id="level-count">1 / 5</span></div><div class="progress-track"><i id="level-bar"></i></div></div>
+        </aside>
+
+        <section class="visual-panel panel">
+          <div class="visual-top"><div><span class="section-kicker">منطقة المحاكاة</span><h2 id="visual-title">شاهد الخوارزمية تعمل</h2></div><div class="run-state" id="run-state"><span class="state-dot"></span><span id="state-text">جاهز للتجربة</span></div></div>
+          <div class="algorithm-chips" id="algorithm-chips"><span class="algo-chip active">Bubble Sort</span><span class="complexity-chip">O(n²)</span></div>
+          <div class="array-stage" id="array-stage" aria-label="تمثيل المصفوفة">
+            <div class="empty-state" id="empty-state"><span class="empty-glyph">↗</span><b>المصفوفة بانتظارك</b><small>ابدأ التجربة لمشاهدة العناصر تتحرك</small></div>
+          </div>
+          <div class="array-indexes hidden" id="array-indexes"></div>
+          <div class="legend"><span><i class="legend-swatch compare"></i>قيد المقارنة</span><span><i class="legend-swatch moving"></i>نقل / تبديل</span><span><i class="legend-swatch sorted"></i>في موضعه</span><span><i class="legend-swatch pivot"></i>Pivot</span></div>
+          <div class="step-card" id="step-card"><div class="step-icon">✦</div><div class="step-copy"><b id="step-title">جاهز لاكتشاف الخطوة الأولى؟</b><p id="step-description">اختر خوارزمية ومصفوفة، ثم ابدأ لترى كيف تفكر.</p></div><span class="step-count" id="step-count">—</span></div>
+          <div class="challenge-box hidden" id="challenge-box"><div class="challenge-head"><span class="quiz-icon">?</span><div><b id="quiz-title">ما الخطوة التالية؟</b><small id="quiz-hint">اختر الإجابة الصحيحة للمتابعة</small></div><button id="hint-button" class="hint-button">✧ تلميح</button></div><div class="answer-options" id="answer-options"></div><p class="feedback" id="feedback" aria-live="polite"></p></div>
+          <div class="controls-row"><div class="transport"><button id="play-button" class="transport-button" aria-label="تشغيل أو إيقاف مؤقت" disabled>▶</button><button id="step-button" class="transport-button" aria-label="الخطوة التالية" disabled>›</button><button id="restart-button" class="transport-button" aria-label="إعادة من البداية" disabled>↺</button></div><div class="speed-control"><span>السرعة</span><input id="speed" type="range" min="1" max="5" value="3" aria-label="سرعة الأنيميشن"><b id="speed-label">1×</b></div><div class="counter"><span>الخطوة</span><b id="counter-value">0 <small>/ 0</small></b></div></div>
+        </section>
+
+        <aside class="insight-panel panel">
+          <div class="panel-heading"><div><span class="section-kicker">لوحة التعلّم</span><h2>ما الذي يحدث؟</h2></div><span class="insight-icon">◉</span></div>
+          <div class="explanation-card"><span class="mini-label">شرح الخطوة</span><p id="explanation">تظهر هنا تفاصيل الحركة الحالية، مع السبب وراء قرار الخوارزمية.</p><div class="explain-footer"><span class="explain-dot"></span><span id="explanation-tag">بانتظار البدء</span></div></div>
+          <div class="stats-grid"><div class="stat-box"><span>المقارنات</span><b id="comparisons">0</b><small>Comparisons</small></div><div class="stat-box"><span>العمليات</span><b id="operations">0</b><small>Swaps / Moves</small></div></div>
+          <div class="complexity-card"><div class="complexity-title"><span>◷</span><b>التعقيد الزمني</b></div><div class="complexity-value"><span id="complexity">O(n²)</span><small id="complexity-case">متوسط الحالة</small></div><p id="complexity-note">يقارن العناصر على عدة تمريرات.</p></div>
+          <div class="score-card"><span class="score-star">✦</span><div><b><span id="session-score">0</span> نقطة</b><small id="attempts-label">أجب صح واكسب نقاطاً</small></div><span class="streak" id="streak">+0</span></div>
+          <div class="finish-card hidden" id="finish-card"><span>🎉</span><div><b id="finish-title">أحسنت!</b><small id="finish-copy">اكتملت عملية الترتيب.</small></div><button id="next-level">المرحلة التالية ←</button></div>
+        </aside>
+      </section>
+      <footer><span>صُمّم للتعلّم بالتجربة</span><span>مقارنة · تفكير · ترتيب <i>✦</i></span></footer>
+    </main>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
